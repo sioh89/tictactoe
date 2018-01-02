@@ -6,29 +6,51 @@ class App extends React.Component {
     super(props);
     this.state = {
       turn: 'X',
-      board: [[0, 0, 0],
-              [0, 0, 0],
-              [0, 0, 0]],
+      '0 0': ' ',
+      '0 1': ' ',
+      '0 2': ' ',
+      '1 0': ' ',
+      '1 1': ' ',
+      '1 2': ' ',
+      '2 0': ' ',
+      '2 1': ' ',
+      '2 2': ' ',
     }
   }
+
+  pickSquare(e) {
+    e.preventDefault();
+
+    if (this.state[e.target.value] === ' ') {
+      const other = {
+        X: 'O',
+        O: 'X',
+      };
+      this.setState({
+        [e.target.value]: this.state.turn,
+        turn: other[this.state.turn],
+      });
+    }
+  }
+
   render() {
     return (
       <div>
         TicTacToe!
         <div className="row-1">
-          <button>{this.state.board[0][0]}</button>
-          <button>{this.state.board[0][1]}</button>
-          <button>{this.state.board[0][2]}</button>
-          </div>
+          <button value="0 0" onClick={this.pickSquare.bind(this)}>{this.state['0 0']}</button>
+          <button value="0 1" onClick={this.pickSquare.bind(this)}>{this.state['0 1']}</button>
+          <button value="0 2" onClick={this.pickSquare.bind(this)}>{this.state['0 2']}</button>
+        </div>
         <div className="row-2">
-        <button>{this.state.board[1][0]}</button>
-        <button>{this.state.board[1][1]}</button>
-        <button>{this.state.board[1][2]}</button>
+          <button value="1 0" onClick={this.pickSquare.bind(this)}>{this.state['1 0']}</button>
+          <button value="1 1" onClick={this.pickSquare.bind(this)}>{this.state['1 1']}</button>
+          <button value="1 2" onClick={this.pickSquare.bind(this)}>{this.state['1 2']}</button>
         </div>
         <div className="row-3">
-        <button>{this.state.board[2][0]}</button>
-        <button>{this.state.board[2][1]}</button>
-        <button>{this.state.board[2][2]}</button>
+          <button value="2 0" onClick={this.pickSquare.bind(this)}>{this.state['2 0']}</button>
+          <button value="2 1" onClick={this.pickSquare.bind(this)}>{this.state['2 1']}</button>
+          <button value="2 2" onClick={this.pickSquare.bind(this)}>{this.state['2 2']}</button>
         </div>
       </div>
     );
