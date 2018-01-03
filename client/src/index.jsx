@@ -9,6 +9,10 @@ class App extends React.Component {
       '0 0': ' ', '0 1': ' ', '0 2': ' ',
       '1 0': ' ', '1 1': ' ', '1 2': ' ',
       '2 0': ' ', '2 1': ' ', '2 2': ' ',
+      other: {
+        X: 'O',
+        O: 'X',
+      },
       turnsTaken: 0,
       winner: null,
     }
@@ -16,6 +20,7 @@ class App extends React.Component {
     this.checkCol = this.checkCol.bind(this);
     this.checkRow = this.checkRow.bind(this);
     this.checkDiags = this.checkDiags.bind(this);
+    this.getInitialState = this.getInitialState.bind(this);
   }
 
   pickSquare(e) {
@@ -24,14 +29,9 @@ class App extends React.Component {
     const coord = e.target.value;
 
     if (this.state[coord] === ' ') {
-      const other = {
-        X: 'O',
-        O: 'X',
-      };
-      
       this.setState({
         [coord]: this.state.turn,
-        turn: other[this.state.turn],
+        turn: this.state.other[this.state.turn],
         turnsTaken: this.state.turnsTaken + 1,
       }, () => {
         if (this.state.turnsTaken === 9) {
@@ -52,8 +52,11 @@ class App extends React.Component {
     const col = temp[1];
 
     if (this.checkCol(col) || this.checkRow(row) || this.checkDiags(row, col)) {
-      // WINNER
+
       console.log('potential winner');
+      this.setState({
+        winner: this.state.other[this.state.turn],
+      })
     }
   }
   
@@ -122,9 +125,47 @@ class App extends React.Component {
     return false;
   } 
 
-
+  getInitialState() {
+    return {
+      turn: 'X',
+      '0 0': ' ', '0 1': ' ', '0 2': ' ',
+      '1 0': ' ', '1 1': ' ', '1 2': ' ',
+      '2 0': ' ', '2 1': ' ', '2 2': ' ',
+      other: {
+        X: 'O',
+        O: 'X',
+      },
+      turnsTaken: 0,
+      winner: null,
+    };
+  }
 
   render() {
+
+    if (this.state.winner && this.state.winner !== 'DRAW') {
+      return (
+        <div>
+          TicTacToe
+          <div>
+            Winner is {this.state.winner}
+          </div>
+          <button onClick={() => this.setState(this.getInitialState())}>Play Again</button>
+        </div>
+      );
+    }
+
+    if (this.state.winner === 'DRAW') {
+      return (
+        <div>
+          TicTacToe
+          <div>
+            Draw!
+          </div>
+          <button onClick={() => this.setState(this.getInitialState())}>Play Again</button>
+        </div>
+      );
+    }
+    
     return (
       <div>
         TicTacToe!
