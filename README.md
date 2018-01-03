@@ -1,1 +1,2 @@
 # tictactoe
+JUST DOUBLE CLICK INDEX.HTML

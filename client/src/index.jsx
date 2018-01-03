@@ -184,7 +184,8 @@ class App extends React.Component {
           <button value="2 1" onClick={this.pickSquare.bind(this)}>{this.state['2 1']}</button>
           <button value="2 2" onClick={this.pickSquare.bind(this)}>{this.state['2 2']}</button>
         </div>
-        Current player: {this.state.turn}
+        <div>Current player: {this.state.turn}</div>
+        <button onClick={() => this.setState(this.getInitialState())}>Reset</button>
       </div>
     );
   }
